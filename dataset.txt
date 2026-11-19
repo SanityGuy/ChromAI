@@ -1,11 +1,29 @@
 Red: 255, 0, 0: Red
 Crimson: 220, 20, 60: Red
 Scarlet: 255, 10, 30: Red
+DarkRed: 139, 0, 0: Red
+FireBrick: 178, 34, 34: Red
+
 Orange: 255, 165, 0: Orange
 DarkOrange: 255, 140, 0: Orange
+Coral: 255, 127, 80: Orange
+Tomato: 255, 99, 71: Orange
+Peru: 205, 133, 63: Orange
+
 Blue: 0, 0, 255: Blue
 Navy: 0, 0, 128: Blue
+RoyalBlue: 65, 105, 225: Blue
+MidnightBlue: 25, 25, 112: Blue
+SteelBlue: 70, 130, 180: Blue
+
 Yellow: 255, 255, 0: Yellow
 Gold: 255, 215, 0: Yellow
+Khaki: 189, 183, 107: Yellow
+LemonChiffon: 255, 250, 205: Yellow
+LightYellow: 255, 255, 224: Yellow
+
 Green: 0, 128, 0: Green
-ForestGreen: 34, 139, 34: Green   
+ForestGreen: 34, 139, 34: Green
+LimeGreen: 50, 205, 50: Green
+DarkGreen: 0, 100, 0: Green
+SeaGreen: 46, 139, 87: Green   

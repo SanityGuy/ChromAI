@@ -14,7 +14,6 @@ for line in data.strip().splitlines():
     parts = line.split(":")
     if len(parts) < 3:
         continue
-    name = parts[0].strip()
     r, g, b = (int(v.strip()) for v in parts[1].split(","))
     category = parts[2].strip()
     X.append((r, g, b))
@@ -23,20 +22,20 @@ for line in data.strip().splitlines():
 X = np.array(X)
 y = np.array(y)
 
-rng = np.random.default_rng(42)
-X_aug = [X]
-y_aug = [y]
-for _ in range(99):
-    noise = rng.integers(-15, 16, size=X.shape)
-    X_aug.append(np.clip(X + noise, 0, 255))
-    y_aug.append(y)
-
-X = np.vstack(X_aug)
-y = np.concatenate(y_aug)
-
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
+
+rng = np.random.default_rng(42)
+X_aug = [X_train]
+y_aug = [y_train]
+for _ in range(99):
+    noise = rng.integers(-15, 16, size=X_train.shape)
+    X_aug.append(np.clip(X_train + noise, 0, 255))
+    y_aug.append(y_train)
+
+X_train = np.vstack(X_aug)
+y_train = np.concatenate(y_aug)
 
 best_k = None
 best_acc = 0

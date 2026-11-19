@@ -31,7 +31,14 @@ colors = {
     "Salmon":      (250, 128, 114),
     "Scarlet":     (255, 36, 0),
     "Cerulean":    (0, 123, 167),
-}   
+}
+
+def calculate_distance(rgb):
+    color = min(colors, key=lambda c: sum((a - b) ** 2 for a, b in zip(colors[c], rgb)))
+    distance = math.sqrt(sum((a - b) ** 2 for a, b in zip(colors[color], rgb)))
+    return color, distance
+
+D_MAX = math.sqrt(3 * 255 ** 2)
 
 while True:
     print("\nChromAI - AI that detects colors and announces it to you.")
@@ -46,22 +53,16 @@ while True:
     except KeyboardInterrupt:
         print("\nAwwh okay :(\n")
         break
-    except:
-        print("Huh, something might've happened!")
-        continue
-    
-    color = None
-    
+
     if r > 255 or g > 255 or b > 255:
         print("Max RGB value is 255 lah!")
         continue
-    
+
     if r < 0 or g < 0 or b < 0:
         print("Min RGB value is 0 silly!")
         continue
 
-    color = min(colors, key=lambda c:sum((a - b) ** 2 for a,b in zip(colors[c], (r,g,b))))
-    distance = math.sqrt(sum((a - b) ** 2 for a,b in zip(colors[color], (r,g,b))))
+    color, distance = calculate_distance((r, g, b))
 
     if distance < 100:
         print(f"\nYour color is: {color}! (distance: {distance:.1f})")
@@ -72,10 +73,7 @@ while True:
     Closest guess: {color} (distance: {distance:.1f})
     """)
         continue
-    
+
     choice = input("Try again? (y/n) ")
     if choice == "n":
-        break
-    else:
-        continue
-    
+        break   

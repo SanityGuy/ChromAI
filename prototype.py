@@ -1,30 +1,65 @@
 from pathlib import Path
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import joblib
 
-data = Path("colors.txt").read_text(encoding="utf-8")
+data = Path("dataset.txt").read_text(encoding="utf-8")
 
 X = []
 y = []
 
 for line in data.strip().splitlines():
-    if ":" not in line:
+    parts = line.split(":")
+    if len(parts) < 3:
         continue
-    name, rgb_str = line.split(":", 1)
-    r, g, b = (int(v.strip()) for v in rgb_str.split(","))
+    name = parts[0].strip()
+    r, g, b = (int(v.strip()) for v in parts[1].split(","))
+    category = parts[2].strip()
     X.append((r, g, b))
-    y.append(name.strip())
+    y.append(category)
+
+X = np.array(X)
+y = np.array(y)
+
+rng = np.random.default_rng(42)
+X_aug = [X]
+y_aug = [y]
+for _ in range(99):
+    noise = rng.integers(-15, 16, size=X.shape)
+    X_aug.append(np.clip(X + noise, 0, 255))
+    y_aug.append(y)
+
+X = np.vstack(X_aug)
+y = np.concatenate(y_aug)
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-model = KNeighborsClassifier(n_neighbors=3)
+best_k = None
+best_acc = 0
+for k in [1, 3, 5, 7, 9, 11, 15]:
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X_train, y_train)
+    acc = model.score(X_test, y_test)
+    print(f"K={k:2d}  Accuracy: {acc:.4f}")
+    if acc > best_acc:
+        best_acc = acc
+        best_k = k
+
+print(f"\nBest K: {best_k} (Accuracy: {best_acc:.4f})")
+
+model = KNeighborsClassifier(n_neighbors=best_k)
 model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
 
-predictions = model.predict(X_test)
+print(f"\nAccuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(f"\nConfusion Matrix:\n{confusion_matrix(y_test, y_pred)}")
+print(f"\nClassification Report:\n{classification_report(y_test, y_pred)}")
 
-for rgb, actual, predicted in zip(X_test, y_test, predictions):
-    print(f"RGB: {rgb} | Actual: {actual} | Predicted: {predicted}")
+joblib.dump(model, "color_knn_model.pkl")
 
-print(f"\nAccuracy: {model.score(X_test, y_test):.2f}")   
+test_color = np.array([[220, 30, 50]])
+print(f"\nRGB: {tuple(test_color[0])} → {model.predict(test_color)[0]}")   

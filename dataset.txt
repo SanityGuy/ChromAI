@@ -1,0 +1,11 @@
+Red: 255, 0, 0: Red
+Crimson: 220, 20, 60: Red
+Scarlet: 255, 10, 30: Red
+Orange: 255, 165, 0: Orange
+DarkOrange: 255, 140, 0: Orange
+Blue: 0, 0, 255: Blue
+Navy: 0, 0, 128: Blue
+Yellow: 255, 255, 0: Yellow
+Gold: 255, 215, 0: Yellow
+Green: 0, 128, 0: Green
+ForestGreen: 34, 139, 34: Green   

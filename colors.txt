@@ -23,7 +23,7 @@ MediumVioletRed: 199, 21, 133
 PaleVioletRed: 219, 112, 147
 Cerise: 222, 49, 99
 Blush: 222, 93, 131
-Fuchsia: 255, 0, 255
+Fuchsia: 240, 0, 235
 Magenta: 255, 0, 255
 
 # Oranges
@@ -90,7 +90,7 @@ HunterGreen: 53, 94, 59
 
 # Cyans & Teals
 Cyan: 0, 255, 255
-Aqua: 0, 255, 255
+Aqua: 0, 235, 255
 LightCyan: 224, 255, 255
 PaleTurquoise: 175, 238, 238
 Aquamarine: 127, 255, 212
@@ -175,7 +175,7 @@ Umber: 99, 81, 71
 Sepia: 112, 66, 20
 Mahogany: 192, 64, 0
 Chestnut: 149, 69, 53
-Cinnamon: 210, 105, 30
+Cinnamon: 198, 112, 48
 Coffee: 111, 78, 55
 Bronze: 205, 127, 50
 Copper: 184, 115, 51
